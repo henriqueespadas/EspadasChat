@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div id="principal">
+        <div id = "chat">
+            <a class="title">{{receiver.username}}</a><br>
+            <div>
+                {% for message in messages_send %}
+                    {{ message.message }}
+                {% endfor %}
+            </div>
+            <div>
+                {% for message in messages_receiver %}
+                    {{ message.message }}
+                {% endfor %}
+            </div>
+            <form method="post" action = "{% url 'message' %}">
+                {% csrf_token %}
+                <label>
+                    <input name= "message" placeholder = "Digite sua mensagem aqui" type = "text">
+                </label>
+                <button class="btn btn-outline-primary" type = "submit" name = "user_id" value = "{{ receiver.id }}">Enviar mensagem</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+

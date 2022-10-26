@@ -3,26 +3,40 @@
 {% block body %}
     <div id="principal">
         <div id = "chat">
-            <a class="title">{{receiver.username}}</a><br>
-            <div>
-                {% for message in messages_send %}
-                    {{ message.message }}
+            <div id = "chat-box-field">
+                <a class="title">{{receiver.username}}</a><br>
+                {% for message in messages %}
+                    <div class="chat-box" data-id="{{message.id}}">
+                        <div>
+                            {{ message.date_time }} {{ message.user }} {{ message.message }}
+                       </div>
+                    </div>
                 {% endfor %}
+                <form method="post" action = "{% url 'message' %}">
+                    {% csrf_token %}
+                    <label>
+                        <input name= "message" placeholder = "Digite sua mensagem aqui" type = "text">
+                    </label>
+                    <button class="btn btn-outline-primary" type = "submit" name = "user_id" value = "{{ receiver.id }}">Enviar mensagem</button>
+                </form>
             </div>
-            <div>
-                {% for message in messages_receiver %}
-                    {{ message.message }}
-                {% endfor %}
-            </div>
-            <form method="post" action = "{% url 'message' %}">
-                {% csrf_token %}
-                <label>
-                    <input name= "message" placeholder = "Digite sua mensagem aqui" type = "text">
-                </label>
-                <button class="btn btn-outline-primary" type = "submit" name = "user_id" value = "{{ receiver.id }}">Enviar mensagem</button>
-            </form>
         </div>
     </div>
 {% endblock %}
 
-
+{#<script type="text/javascript">#}
+{#    function ajax(){#}
+{#        var req = new XMLHttpRequest();#}
+{#        req.onreadystatechange = function(){#}
+{#            if (req.readyState == 4 && req.status == 200) {#}
+{#                document.getElementById('chat').innerHTML = req.responseText;#}
+{#            }#}
+{#        }#}
+{#        req.open('GET', 'chat.php', true);#}
+{#        req.send();#}
+{#    }#}
+{##}
+{#    setInterval(function(){ajax();}, 1000);#}
+{##}
+{##}
+{#</script>#}

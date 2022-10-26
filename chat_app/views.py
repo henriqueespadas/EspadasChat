@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import IntegrityError
+from django.db.models import Q
+
 
 
 def index(request):
@@ -95,14 +97,13 @@ def interlocutor_selection(request):
 
 def chat_page(request, userid):
     receiver = User.objects.get(pk=userid, is_active=True)
-    messages_send = Message.objects.filter(user=request.user, receiver=receiver)
-    messages_receiver = Message.objects.filter(user=receiver, receiver=request.user)
+    messages = Message.objects.filter(
+        Q(user=request.user, receiver=receiver) | Q(user=receiver, receiver=request.user))
     return render(
         request,
         "chat_page.html",
         {   
             "receiver": receiver,
-            "messages_send": messages_send,
-            "messages_receiver": messages_receiver,
+            "messages": messages,
         },
     )

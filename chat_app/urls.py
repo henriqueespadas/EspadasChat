@@ -8,7 +8,6 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("chat_page/<int:userid>", views.chat_page, name="chat_page"),
-    path("chat_page/<int:userid>", views.chat_page, name="chat_page"),
     path(
         "interlocutor_selection",
         views.interlocutor_selection,

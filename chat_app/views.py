@@ -57,7 +57,6 @@ def message(request):
             return chat_page(request, id_user)
 
 
-
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -107,3 +106,4 @@ def chat_page(request, userid):
             "messages": messages,
         },
     )
+
